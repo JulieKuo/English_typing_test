@@ -40,12 +40,11 @@ else:
     end = len(df_test)
 
 # choose test type
-print("\n1: Questions in Chinese and answers in English.\n2: Questions in English and answers in Chinese.(Type)\n3: Questions in English and answers in Chinese.(Think)")
+print("\n1: Questions in Chinese and answers in English.\n2. Questions in English and answers in Chinese.")
 test_type = input("choose test type: ")
 
 # start test
 nums = list(range(start-1, end))
-pattern = r'[，。！？；：“”‘’（）【】《》「」『』……——～·、]'
 wrong = 0
 while nums:
     print(f"{'_' * 150}")
@@ -63,8 +62,6 @@ while nums:
     else:
         quest = df_test.loc[num, "English"]
         ans = df_test.loc[num, "Chinese"]
-        ans1 = re.split(pattern, ans) # 標點號切割，之後判斷輸入值是否在切割的元素中
-        ans1 = list(set(ans1) - set([""])) # 刪除空格
 
     pos = df_test.loc[num, "POS"]
     definition = df_test.loc[num, "Definition"]
@@ -73,7 +70,7 @@ while nums:
     print(f"\nQuestion: {quest} ({pos})")
     print(f"Definition: {definition}")
     print(f"Remaining: {len(nums)+1} (No. {num})")
-    if test_type != "3":
+    if test_type == "1":
         ans_input = input("Answer: ")
         ans_input = ans_input.strip() # remove space
     else:
@@ -86,10 +83,8 @@ while nums:
     wrong = 0
     if (test_type == "1") and (ans_input == ans):
         print(f"Right!!!")
-    elif (test_type == "2") and (ans_input in ans1):
-        print(f"Right!!!\nComplete answer: {ans}")
-    elif (test_type == "3"):
-        if ans_input == "0":
+    elif (test_type == "2"):
+        if ans_input != "1":
             nums.insert(0, num) # test the same word next round
             nums.append(num) # add this word to test again
             wrong = 1
