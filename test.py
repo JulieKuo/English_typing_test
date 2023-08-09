@@ -16,13 +16,9 @@ file = dataset_map[int(dataset_id)]
 print(f'Get words from "{file}".\n')
 
 # Get data
-if file == "IELTS":
-    file_path = os.path.join("data", f"{file}.xlsx")
-    df = pd.read_excel(file_path, header=1)
-    df.columns = ["English", "POS", "Definition", "Chinese"]
-else:
-    file_path = f"data/{file}.csv"
-    df = pd.read_csv(file_path)
+file_path = os.path.join("data", f"{file}.xlsx")
+df = pd.read_excel(file_path, header=1)
+df.columns = ["English", "POS", "Definition", "Chinese"]
 
 # choose the range of words
 start = input(f"starting number(>=1, <={len(df)}) or word: ")
